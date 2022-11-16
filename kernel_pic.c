@@ -22,6 +22,6 @@ void setupPIC()
     outportb(0x21, 0x0);
     outportb(0xA1, 0x0);
     // Now, enable the keyboard IRQ only 
-    outportb(0x21, 0xfe); // Turn on the keyboard & timer IRQ
+    outportb(0x21, 0xfc); // Turn on the keyboard & timer IRQ
     outportb(0xA1, 0xff); // Turn off all others
 }

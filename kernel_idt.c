@@ -1,4 +1,5 @@
 #include "kernel_idt.h"
+#include "kernel_kbd.h"
 
 idt_entry idt[256];
 idt_ptr limitStruct;
@@ -141,11 +142,13 @@ void initIDT()
                     break;
             case 16: initIDTEntry(&idt[i], (uint32_t)&interrupt_16, 0x10, 0x8e);
                     break;
+            case 32: initIDTEntry(&idt[i], (uint32_t)&dispatch, 0x10, 0x8e);
+                    break;
+            case 33: initIDTEntry(&idt[i], (uint32_t)&kbd_enter, 0x10, 0x8e);
+                    break;
             default:
                 if (i > 16 && i < 32 )
                     initIDTEntry(&idt[i], (uint32_t)&default_exception, 0x10, 0x8e);
-                else if (i == 32)
-                    initIDTEntry(&idt[i], (uint32_t)&dispatch, 0x10, 0x8e);
                 else    
                     initIDTEntry(&idt[i], 0, 0x10, 0x8e);
                 break;
