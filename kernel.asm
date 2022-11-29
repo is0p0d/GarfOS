@@ -34,15 +34,6 @@ EXTERN currProcess
 ; through these runes i shall cast spells in its arcane tongue
 ; with careful words and billowing commands
 ; this computing golem shall do as I say:
-k_hidecursor:
-    ;this was a quick attempt to get rid of the bios cursor, it
-    ;ended up not working - wanted to ask about it.
-    push cx
-
-    mov cx, 2607h       ;move an instruction into cx for the bios
-    int 10h
-
-    pop cx
 
 k_printstr:
     ;routine for moving a given 0-terminated string to video memory
@@ -187,3 +178,12 @@ yield:
     ; ret
 
     
+k_hidecursor:
+    ;this was a quick attempt to get rid of the bios cursor, it
+    ;ended up not working - wanted to ask about it.
+    push cx
+
+    mov cx, 2607h       ;move an instruction into cx for the bios
+    int 10h
+
+    pop cx
