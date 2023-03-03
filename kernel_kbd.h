@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include "kbd_characters.h"
 
+#define MAX_BUF 64
+
 struct ring_buffer_struct
 {
     char* buffer;
@@ -25,5 +27,8 @@ void kbd_enter();                                               //asm boot2.s
 void kbd_handler(uint16_t scancode);
 char translate_scancode(int code);
 char k_getchar();
+
+extern ring_buffer kbd_buffer;
+extern char charBuffer[MAX_BUF];
 
 #endif //KERNEL_KBD_H

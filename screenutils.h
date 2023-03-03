@@ -11,6 +11,7 @@ void initScreen();
 void splash_screen();
 void corner_garf();
 void print_border(int start_row, int start_col, int end_row, int end_col);
+void err_clear();
 void err_msg(char* msg);
 
 #endif //SCREENUTILS_H

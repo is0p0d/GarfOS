@@ -115,7 +115,7 @@ void buddy_init_i(mem_node_t *t, int max) {
     t[i].allocated = 0;
     t[i].exists = 0;
     convert_num(i, buffer);
-    k_printstr(buffer, 2, 1);
+    k_printstr(buffer, 2, 21);
   }
   t[0].size = HEAP_SIZE;
   t[0].offset = 0;

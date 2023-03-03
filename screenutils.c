@@ -9,8 +9,7 @@ void initScreen()
     k_printstr("[SYSTEM MESSAGE]",0,1);
     print_border(2,0,3,MAXCOL);
     k_printstr("[USER SPACE]",3,1);
-    err_msg("GarfOS v2.3a :: [Test Branch] - Jim M, 2022");
-    corner_garf();
+    //corner_garf();
 }
 
 void splash_screen()
@@ -65,7 +64,15 @@ void print_border(int start_row, int start_col, int end_row, int end_col)
     k_printstr("+", end_row, start_col);
     k_printstr("+", end_row, end_col);
 }
+void err_clear()
+{
+    for (int i = 1; i < 78; i++)
+    {
+        k_printstr(" ",1,i);
+    }
+}
 void err_msg(char* msg)
 {   //uses the last row of the screen before the border as a space to render error messages and exceptions.
+    err_clear();
     k_printstr(msg, 1, 1);
 }
