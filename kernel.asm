@@ -7,6 +7,8 @@ GLOBAL k_hidecursor
 GLOBAL k_printstr
 GLOBAL k_clearscr
 
+GLOBAL kbd_enter
+
 GLOBAL go
 GLOBAL go_rest
 GLOBAL dispatch
@@ -103,6 +105,28 @@ k_clearscr:
     popad
     ret
 
+kbd_enter:
+    cli
+    pushad
+    pushf
+    in al, 0x64         # Read keyboard controller signal
+    and al, 0x01
+    jz _kbd_skip
+    in al, 0x60         # Read the keyboard's scancode
+
+    movzx eax, al
+
+    push eax
+    call kbd_handler
+    add esp, 4
+
+_kbd_skip:
+    mov al, 0x20
+    out 0x20, al
+    popf
+    popad
+    iret
+
 go:
     push PCBqueue       ;push global PCBqueue onto the stack
     call currProDeq
@@ -178,12 +202,12 @@ yield:
     ; ret
 
     
-k_hidecursor:
-    ;this was a quick attempt to get rid of the bios cursor, it
-    ;ended up not working - wanted to ask about it.
-    push cx
+; k_hidecursor:
+;     ;this was a quick attempt to get rid of the bios cursor, it
+;     ;ended up not working - wanted to ask about it.
+;     push cx
 
-    mov cx, 2607h       ;move an instruction into cx for the bios
-    int 10h
+;     mov cx, 2607h       ;move an instruction into cx for the bios
+;     int 10h
 
-    pop cx
+;     pop cx
