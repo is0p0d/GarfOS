@@ -43,7 +43,7 @@ int main()
     init_timer_dev(5);
     setupPIC();
 
-    k_print("Press any key to clear the screen",4,1);
+    k_printstr("Press any key to clear the screen",4,1);
 
     while(1)
     {
