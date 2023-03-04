@@ -4,6 +4,7 @@
 #include "io.h"
 #include "screenutils.h"
 #include "kernel_kbd.h"
+//#include "usr_gamemaps.h"
 
 #define GMAXCOL 78
 #define GMAXROW 23
@@ -16,6 +17,7 @@
 void ent_print(char *s, int newrow, int newcol, int oldrow, int oldcol);
 //void gameupdate(int oldchrX, int oldchrY, int newchrX, int newchrY);
 void printLoc(int oldchrX, int oldchrY, int newchrX, int newchrY);
+void renderMap(int mapName[GMAXROW][GMAXCOL]);
 void proc_gameloop();
 
 
