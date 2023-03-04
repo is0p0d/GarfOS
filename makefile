@@ -29,8 +29,8 @@ boot2: kernel.elf
 boot1: kernel.elf boot1.asm
 	nasm -DENTRY=0x$(shell nm kernel.elf | grep main | cut -d " " -f 1) boot1.asm
 
-kernel.elf: kernel_c.o kernel_asm.o kernel_pic.o kernel_idt.o kernel_pcb.o processes.o screenutils.o buddy.o convert.o
-	ld -g -melf_i386 -Ttext 0x10000 -e main -o kernel.elf kernel_c.o kernel_asm.o kernel_pic.o kernel_idt.o kernel_pcb.o processes.o screenutils.o buddy.o convert.o
+kernel.elf: kernel_c.o kernel_asm.o kernel_kbd.o kernel_pic.o kernel_idt.o kernel_pcb.o usr_game.o processes.o screenutils.o buddy.o convert.o
+	ld -g -melf_i386 -Ttext 0x10000 -e main -o kernel.elf kernel_c.o kernel_asm.o kernel_kbd.o kernel_pic.o kernel_idt.o kernel_pcb.o usr_game.o processes.o screenutils.o buddy.o convert.o
 
 kernel_c.o: kernel.c io.h
 	gcc -g -m32 -fno-stack-protector -c -o kernel_c.o kernel.c
@@ -38,6 +38,8 @@ kernel_c.o: kernel.c io.h
 kernel_asm.o: kernel.asm
 	nasm -g -f elf -F dwarf -o kernel_asm.o kernel.asm
 
+kernel_kbd.o: kernel_kbd.c kernel_kbd.h
+	gcc -g -m32 -fno-stack-protector -c -o kernel_kbd.o kernel_kbd.c
 kernel_pic.o: kernel_pic.c kernel_pic.h
 	gcc -g -m32 -fno-stack-protector -c -o kernel_pic.o kernel_pic.c
 
@@ -46,6 +48,9 @@ kernel_idt.o: kernel_idt.c kernel_idt.h
 
 kernel_pcb.o: kernel_pcb.c kernel_pcb.h
 	gcc -g -m32 -fno-stack-protector -c -o kernel_pcb.o kernel_pcb.c
+
+usr_game.o: usr_game.c usr_game.h
+	gcc -g -m32 -fno-stack-protector -c -o usr_game.o usr_game.c
 
 processes.o: processes.c processes.h
 	gcc -g -m32 -fno-stack-protector -c -o processes.o processes.c

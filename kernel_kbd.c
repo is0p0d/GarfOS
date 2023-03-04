@@ -6,7 +6,7 @@ char charBuffer[MAX_BUF];
 
 //buffer functions
 //===========================================================================
-void ring_buff_init(ring_buffer* passedStruct, char* passedBuff, uint8 buffLength)
+void ring_buff_init(ring_buffer* passedStruct, char* passedBuff, uint8_t buffLength)
 {
     passedStruct->buffer = passedBuff;
     passedStruct->first = 0;
@@ -15,7 +15,7 @@ void ring_buff_init(ring_buffer* passedStruct, char* passedBuff, uint8 buffLengt
 }
 void ring_buff_push(ring_buffer* buff, char data)
 {
-    uint8 writeNext;
+    uint8_t writeNext;
     writeNext = buff->first + 1; //where to point after writing
     //position logic
     if (writeNext >= buff->buffMax)
@@ -27,7 +27,7 @@ void ring_buff_push(ring_buffer* buff, char data)
 }
 void ring_buff_pop(ring_buffer* buff, char* data)
 {
-    uint8 readNext;
+    uint8_t readNext;
 
     if (buff->first == buff->last) //buffer is empty if this is true
     {
@@ -42,7 +42,7 @@ void ring_buff_pop(ring_buffer* buff, char* data)
     *data = buff->buffer[buff->last]; //read data
     buff->last = readNext; //move to next offset
 }
-uint8 ring_buff_isfull(ring_buffer* buff)
+uint8_t ring_buff_isfull(ring_buffer* buff)
 {
     if((buff->first)+1 == buff->last) // buff is full
         return 1;
@@ -55,7 +55,7 @@ uint8 ring_buff_isfull(ring_buffer* buff)
 //keyboard functions
 //===========================================================================
 
-void kbd_handler(uint16 scancode)
+void kbd_handler(uint16_t scancode)
 {
     if (scancode < 0x2 || scancode > 0x80)
         return;

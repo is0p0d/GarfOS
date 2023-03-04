@@ -14,6 +14,7 @@
 #include "kernel_pic.h"
 #include "kernel_kbd.h"
 #include "processes.h"
+#include "usr_game.h"
 
 
 queue PCBqueue;
@@ -35,15 +36,22 @@ int main()
     initqueue(PCBqueue_ptr);
     err_msg("Initializing keyboard buffer...");
     ring_buff_init(&kbd_buffer, charBuffer, MAX_BUF);
+    err_msg("Initializing process timer...");
+    init_timer_dev(5);
+    err_msg("Initializing programmable interrupt controller...");
+    setupPIC();
+    err_msg("STI Enable...");
+    asm volatile ("sti");
+
+
     char ch = '0';
     initScreen();
     //k_hidecursor(); see kernel.asm
-    err_msg("GarfOS v3.0a :: [Test Branch] - Jim M, 2023");
+    err_msg("GarfOS v3.5a :: [Test Branch] - Jim M, 2023");
     corner_garf();
-    init_timer_dev(5);
-    setupPIC();
 
-    k_printstr("Press any key to clear the screen",4,1);
+
+    k_printstr("Press any key to start process.",4,1);
 
     while(1)
     {
@@ -51,6 +59,8 @@ int main()
         if (ch != 0)
         {
             k_clearscr();
+            initScreen();
+            proc_gameloop();
         }
     }
     // retval = create_process((uint32_t)&p1);

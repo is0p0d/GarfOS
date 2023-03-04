@@ -24,6 +24,8 @@ EXTERN makeNode
 EXTERN currProDeq
 EXTERN currProEnq
 
+EXTERN kbd_handler
+
 ;variables
 EXTERN PCBqueue
 EXTERN currProcess
@@ -109,10 +111,10 @@ kbd_enter:
     cli
     pushad
     pushf
-    in al, 0x64         # Read keyboard controller signal
+    in al, 0x64         ; Read keyboard controller signal
     and al, 0x01
     jz _kbd_skip
-    in al, 0x60         # Read the keyboard's scancode
+    in al, 0x60         ; Read the keyboard's scancode
 
     movzx eax, al
 
