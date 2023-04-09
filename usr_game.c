@@ -81,6 +81,29 @@ void printLoc(int oldchrX, int oldchrY, int newchrX, int newchrY)
 
 }
 
+int collisionCheck(int chrX, int chrY, int **map)
+{
+    switch(map[chrY-YOFFSET][chrX-XOFFSET])
+    {
+        case 0:
+            return 1;
+            break;
+        case 1:
+            return 0;
+            break;
+        case 2:
+            return 0;
+            break;
+        case 3:
+            return 1;
+            break;
+        default:
+            err_msg("GAMETEST - COLLISION ERROR");
+            return 0;
+            break;
+    }
+}
+
 void renderMap(int mapName[GMAXROW][GMAXCOL])
 {
     for(int rowIdx = 0; rowIdx < GMAXROW-3; rowIdx++)
@@ -132,7 +155,7 @@ void proc_gameloop()
         switch(keyPress)
         {
             case 'w':
-                if((chrY-mvmt) >= GMINROW)
+                if((chrY-mvmt) >= GMINROW && collisionCheck(chrX, chrY-mvmt, map0) == 1)
                 {
                     ochrY = chrY;
                     chrY = chrY-mvmt;
@@ -147,7 +170,7 @@ void proc_gameloop()
                 }
                 break;
             case 's':
-                if((chrY+mvmt) <= GMAXROW)
+                if((chrY+mvmt) <= GMAXROW && collisionCheck(chrX, chrY+mvmt, map0) == 1)
                 {
                     ochrY = chrY;
                     chrY = chrY+mvmt;
@@ -162,7 +185,7 @@ void proc_gameloop()
                 }
                 break;
             case 'a':
-                if((chrX-mvmt) >= GMINCOL)
+                if((chrX-mvmt) >= GMINCOL && collisionCheck(chrX-mvmt, chrY, map0) == 1)
                 {
                     ochrX = chrX;
                     chrX = chrX-mvmt;
@@ -177,7 +200,7 @@ void proc_gameloop()
                 }
                 break;
             case 'd':
-                if((chrX+mvmt) <= GMAXCOL)
+                if((chrX+mvmt) <= GMAXCOL && collisionCheck(chrX+mvmt, chrY, map0) == 1)
                 {
                     ochrX = chrX;
                     chrX = chrX+mvmt;
